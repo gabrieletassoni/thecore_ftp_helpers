@@ -19,5 +19,8 @@ Gem::Specification.new do |s|
   # s.add_dependency "rails", "~> 5.1.2"
 
   # s.add_development_dependency "sqlite3"
-  s.add_dependency 'thecore', '~> 1.1'
+  s.add_dependency 'thecore_servers', "~> 1.0"
+  # s.add_dependency 'rchardet', '~> 1.6'
+  # s.add_dependency 'acsv', '~> 0.0'
+  # s.add_dependency 'csv-importer', '~> 0.3'
 end

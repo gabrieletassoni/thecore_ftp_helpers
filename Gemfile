@@ -17,4 +17,8 @@ source 'https://www.taris.it/gems-repo' do
   gem 'thecore', '~> 1.1'
 end
 
+# gem 'rchardet', '~> 1.6'
+# gem 'acsv', '~> 0.0'
+gem 'thecore_servers', path: '../../thecore_project/thecore_servers'
+
 gem 'sqlite3'
