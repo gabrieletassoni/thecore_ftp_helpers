@@ -1,10 +1,4 @@
 PATH
-  remote: ../thecore_servers
-  specs:
-    thecore_servers (1.0.7)
-      thecore (~> 1.1)
-
-PATH
   remote: .
   specs:
     thecore_ftp_helpers (1.1.0)
@@ -234,6 +228,8 @@ GEM
       rails_admin-i18n (~> 1.11)
       rails_admin_rollincode (~> 1.2)
       rails_admin_toggleable (~> 0.7)
+    thecore_servers (1.0.13)
+      thecore (~> 1.1)
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -252,7 +248,7 @@ DEPENDENCIES
   sqlite3
   thecore (~> 1.1)!
   thecore_ftp_helpers!
-  thecore_servers!
+  thecore_servers (~> 1.0)!
 
 BUNDLED WITH
    1.15.3

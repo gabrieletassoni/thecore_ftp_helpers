@@ -20,7 +20,4 @@ Gem::Specification.new do |s|
 
   # s.add_development_dependency "sqlite3"
   s.add_dependency 'thecore_servers', "~> 1.0"
-  # s.add_dependency 'rchardet', '~> 1.6'
-  # s.add_dependency 'acsv', '~> 0.0'
-  # s.add_dependency 'csv-importer', '~> 0.3'
 end
