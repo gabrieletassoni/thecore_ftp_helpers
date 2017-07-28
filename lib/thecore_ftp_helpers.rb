@@ -27,7 +27,8 @@ module ThecoreFtpHelpers
     # ThecoreFtpHelpers::Methods.get_and_parse_most_recent_file '31.196.71.18', 'ideabagno', 'idea2017', 'FTP', 'AQUA*', /^[-;]+$/
     def self.get_and_parse_most_recent_file address, username, password, directory, pattern, skip_lines = nil, quote_char = "\x0C", col_sep = ";"
       file_content = download_most_recent_file address, username, password, directory, pattern
-      CSV.parse(file_content, col_sep: col_sep, headers: true, skip_blanks: true, force_quotes: true, quote_char: quote_char, skip_lines: skip_lines) unless file_content.blank?
+      # , converters: lambda { |h| h.titlecase.strip unless h.nil? }, header_converters: lambda { |h| h.downcase.strip.gsub(' ', '_') unless h.nil? }
+      CSV.parse(file_content, col_sep: col_sep, headers: true, skip_blanks: true, force_quotes: true, quote_char: quote_char, skip_lines: skip_lines, converters: lambda { |h| h.titlecase.strip unless h.nil? }, header_converters: lambda { |h| h.downcase.strip.gsub(' ', '_') unless h.nil? }) unless file_content.blank?
     end
   end
 end
