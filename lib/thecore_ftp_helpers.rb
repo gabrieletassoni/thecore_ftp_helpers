@@ -31,7 +31,7 @@ module ThecoreFtpHelpers
     def self.get_and_parse_most_recent_file address, username, password, directory, pattern, skip_lines = nil, quote_char = "\x0C", col_sep = ";", from = nil
       file_content = download_most_recent_file address, username, password, directory, pattern, nil, from
       # , converters: lambda { |h| h.titlecase.strip unless h.nil? }, header_converters: lambda { |h| h.downcase.strip.gsub(' ', '_') unless h.nil? }
-      CSV.parse(file_content, col_sep: col_sep, headers: true, skip_blanks: true, force_quotes: true, quote_char: quote_char, skip_lines: skip_lines, converters: lambda { |h| h.titlecase.strip unless h.nil? }, header_converters: lambda { |h| h.downcase.strip.gsub(' ', '_') unless h.nil? }) unless file_content.blank?
+      CSV.parse(file_content, col_sep: col_sep, headers: true, skip_blanks: true, force_quotes: true, quote_char: quote_char, skip_lines: skip_lines, converters: lambda { |h| h.titlecase.strip.gsub(",", " ").split.join(" ") unless h.nil? }, header_converters: lambda { |h| h.downcase.strip.gsub(' ', '_').split("_").reject{|c| c.blank? }.uniq.join("_") unless h.nil? }) unless file_content.blank?
     end
   end
 end
