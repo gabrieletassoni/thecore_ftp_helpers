@@ -1,3 +1,3 @@
 module ThecoreFtpHelpers
-  VERSION = '1.1.4'
+  VERSION = '1.1.8'
 end

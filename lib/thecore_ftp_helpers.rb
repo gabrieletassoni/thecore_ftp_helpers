@@ -20,7 +20,9 @@ module ThecoreFtpHelpers
     # If destination is nil, the file will just be downloaded to RAM
     def self.download_most_recent_file address, username, password, directory, pattern, destination = nil, from = nil
       most_recent, ftp = list_most_recent_file address, username, password, directory, pattern, false, from
-      file_content = ftp.gettextfile(most_recent, destination) unless most_recent.nil?
+      file_content = ftp.gettextfile(most_recent, destination).force_encoding('ISO-8859-1').encode('UTF-8') unless most_recent.nil?
+
+      #.encode!('UTF-8', 'binary', :invalid => :replace) unless most_recent.nil?
       ftp.close
       file_content
     end
