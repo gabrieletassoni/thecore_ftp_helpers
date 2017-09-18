@@ -13,7 +13,7 @@ module ThecoreFtpHelpers
       files = ftp.nlst(pattern)
       files = files.select {|f| ftp.mtime(f) > from} unless from.blank?
       most_recent = files.sort_by{|f| ftp.mtime(f)}.last
-      puts "Opening File: #{most_recent}, size: #{ftp.size(most_recent)}, update_at: #{ftp.mtime(most_recent)}"
+      puts "Opening File: #{most_recent}"
       ftp.close if close
       [most_recent, ftp]
     end
