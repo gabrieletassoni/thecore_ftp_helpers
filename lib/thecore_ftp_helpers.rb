@@ -18,6 +18,7 @@ module ThecoreFtpHelpers
         ftp.mtime(f) > from
       } unless from.blank?
       most_recent = files.sort_by{|f| ftp.mtime(f)}.last
+      puts "Opening File: #{most_recent}"
       ftp.close if close
       [most_recent, ftp]
     end
