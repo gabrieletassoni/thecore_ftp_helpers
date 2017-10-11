@@ -15,10 +15,12 @@ module ThecoreFtpHelpers
       files = files.select {|f|
         puts "For file: #{f}"
         puts "Filetime: #{ftp.mtime(f)}"
-        ftp.mtime(f) > from
+        puts "File chosen? #{ftp.mtime(f, true) > from}"
+        ftp.mtime(f, true) > from
       } unless from.blank?
-      most_recent = files.sort_by{|f| ftp.mtime(f)}.last
-      puts "Opening File: #{most_recent}"
+      puts "Chosen files: #{files.inspect}"
+      most_recent = files.sort_by{|f| ftp.mtime(f, true)}.last
+      puts "Opening File: #{most_recent || "No file has been chosen."}"
       ftp.close if close
       [most_recent, ftp]
     end
