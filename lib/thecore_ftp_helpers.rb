@@ -11,10 +11,10 @@ module ThecoreFtpHelpers
       ftp = Net::FTP.open address, username, password
       ftp.chdir(directory)
       files = ftp.nlst(pattern)
+      puts "Last import time: #{from}"
       files = files.select {|f|
         puts "For file: #{f}"
         puts "Filetime: #{ftp.mtime(f)}"
-        puts "Last import time: #{from}"
         ftp.mtime(f) > from
       } unless from.blank?
       most_recent = files.sort_by{|f| ftp.mtime(f)}.last
