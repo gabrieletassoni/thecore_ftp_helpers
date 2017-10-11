@@ -11,15 +11,15 @@ module ThecoreFtpHelpers
       ftp = Net::FTP.open address, username, password
       ftp.chdir(directory)
       files = ftp.nlst(pattern)
-      puts "Last import time: #{from}"
+      puts "Last import time from epoch: #{from.to_f}"
       files = files.select {|f|
         puts "For file: #{f}"
-        puts "Filetime: #{ftp.mtime(f)}"
-        puts "File chosen? #{ftp.mtime(f, true) > from}"
-        ftp.mtime(f, true) > from
+        puts "Filetime: #{ftp.mtime(f, true).to_f}"
+        puts "File chosen? #{ftp.mtime(f, true).to_f > from.to_f}"
+        ftp.mtime(f, true).to_f > from.to_f
       } unless from.blank?
       puts "Chosen files: #{files.inspect}"
-      most_recent = files.sort_by{|f| ftp.mtime(f, true)}.last
+      most_recent = files.sort_by{|f| ftp.mtime(f, true).to_f}.last
       puts "Opening File: #{most_recent || "No file has been chosen."}"
       ftp.close if close
       [most_recent, ftp]
