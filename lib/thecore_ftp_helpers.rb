@@ -8,9 +8,21 @@ module ThecoreFtpHelpers
   class Methods
     # Your code goes here...
     def self.list_most_recent_file address, username, password, directory, pattern, close = true, from = nil
+      puts "Connecting to FTP"
       ftp = Net::FTP.open address, username, password
+      # ftp.passive = false
+      puts "Entering directory: #{directory}"
       ftp.chdir(directory)
-      files = ftp.nlst(pattern)
+      puts "Listing all files which respond to this pattern: #{pattern}"
+      begin
+        files = ftp.nlist(pattern)
+      rescue => exception
+        # If we are here, maybe it's beacause of passive mode and the network too secure
+        # let's switch to active mode and try again
+        ftp.passive = false
+        files = ftp.nlist(pattern)
+      end
+      
       puts "Last import time: #{from.strftime('%Y-%m-%d %H:%M:%S.%N')}"
       files = files.select {|f|
         puts "For file: #{f}"
