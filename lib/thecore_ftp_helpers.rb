@@ -15,12 +15,12 @@ module ThecoreFtpHelpers
       ftp.chdir(directory)
       puts "Listing all files which respond to this pattern: #{pattern}"
       begin
-        files = ftp.nlist(pattern)
+        files = ftp.nlst(pattern)
       rescue => exception
         # If we are here, maybe it's beacause of passive mode and the network too secure
         # let's switch to active mode and try again
         ftp.passive = false
-        files = ftp.nlist(pattern)
+        files = ftp.nlst(pattern)
       end
       
       puts "Last import time: #{from.strftime('%Y-%m-%d %H:%M:%S.%N')}"
