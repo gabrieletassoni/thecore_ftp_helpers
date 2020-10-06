@@ -1,7 +1,7 @@
 
-require 'thecore'
+# require 'thecore'
 require 'net/ftp'
-require 'thecore_servers'
+require 'thecore_backend_commons'
 require "thecore_ftp_helpers/engine"
 
 module ThecoreFtpHelpers
