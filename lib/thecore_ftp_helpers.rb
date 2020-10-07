@@ -11,30 +11,39 @@ module ThecoreFtpHelpers
       puts "Connecting to FTP"
       ftp = Net::FTP.open address, username, password
       # ftp.passive = false
-      puts "Entering directory: #{directory}"
-      ftp.chdir(directory)
+      # puts "Entering directory: #{directory}"
+      # ftp.chdir(directory)
       puts "Listing all files which respond to this pattern: #{pattern}"
       begin
-        files = ftp.nlst(pattern)
+        # files = ftp.nlst(pattern)
+        files=ftp.mlsd directory
       rescue => exception
         # If we are here, maybe it's beacause of passive mode and the network too secure
         # let's switch to active mode and try again
         ftp.passive = false
-        files = ftp.nlst(pattern)
+        files=ftp.mlsd directory
       end
       
       puts "Last import time: #{from.strftime('%Y-%m-%d %H:%M:%S.%N')}"
-      files = files.select {|f|
-        puts "For file: #{f}"
-        puts "Filetime: #{ftp.mtime(f).strftime('%Y-%m-%d %H:%M:%S.%N')}"
-        puts "File chosen? #{ftp.mtime(f).to_f > from.to_f}"
-        ftp.mtime(f).to_f > from.to_f
+      most_recent = nil
+      # puts "SELECTING FILES"
+      files = files.select {|f| 
+        f.pathname.starts_with?(pattern) && f.modify.to_f > from.to_f 
       } unless from.blank?
-      puts "Chosen files: #{files.inspect}"
-      most_recent = files.sort_by{|f| ftp.mtime(f).to_f}.last
+      # puts "SELECTED FILES: #{files.inspect}"
+      most_recent = files.sort_by{|f| f.modify.to_f}.last.pathname
+      # puts "MOST RECENT IS: #{most_recent}"
+      # files.select {|f|
+      #   puts "For file: #{f}"
+      #   puts "Filetime: #{ftp.mtime(f).strftime('%Y-%m-%d %H:%M:%S.%N')}"
+      #   puts "File chosen? #{ftp.mtime(f).to_f > from.to_f}"
+      #   ftp.mtime(f).to_f > from.to_f
+      # } unless from.blank?
+      # puts "Chosen files: #{files.inspect}"
+      # most_recent = files.sort_by{|f| ftp.mtime(f).to_f}.last
       puts "Opening File: #{most_recent || "No file has been chosen."}"
       ftp.close if close
-      [most_recent, ftp]
+      ["#{directory}/#{most_recent}", ftp]
     end
 
     # If destination is nil, the file will just be downloaded to RAM
