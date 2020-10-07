@@ -1,4 +1,3 @@
-require 'thecore'
 module ThecoreFtpHelpers
   class Engine < ::Rails::Engine
 
